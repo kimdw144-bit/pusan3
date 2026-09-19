@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>예금만으로 충분할까요?</title>
+<style>
+  :root{
+    --bg:#f7f8fb; --card:#ffffff; --ink:#111827; --sub:#6b7280;
+    --accent:#2f6fed; --accent-soft:#eaf1ff; --danger:#e2493d; --danger-soft:#fdeceb;
+    --ok:#1c9d6b; --ok-soft:#e7f7f0; --line:#e5e7eb;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    line-height:1.55;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 20px;}
+  section{padding:48px 0;}
+  section + section{border-top:1px solid var(--line);}
+  h1{font-size:30px; line-height:1.35; margin:0 0 12px;}
+  h2{font-size:20px; margin:0 0 16px;}
+  p{color:var(--sub); margin:0 0 8px;}
+  .tag{display:inline-block; font-size:13px; color:var(--accent); background:var(--accent-soft); padding:4px 10px; border-radius:999px; margin-bottom:14px; font-weight:600;}
+  .cta{
+    display:inline-block; margin-top:20px; padding:14px 26px; font-size:16px; font-weight:700;
+    background:var(--accent); color:#fff; border-radius:12px; text-decoration:none; border:none; cursor:pointer;
+  }
+  .cta[disabled], .cta.disabled{background:#c6d3ec; cursor:not-allowed;}
+  .cta small{display:block; font-weight:400; font-size:12px; margin-top:2px; opacity:.9;}
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:22px; margin-bottom:14px;}
+  .stat-row{display:flex; gap:14px; flex-wrap:wrap;}
+  .stat{flex:1; min-width:150px;}
+  .stat .num{font-size:32px; font-weight:800;}
+  .stat .num.d1{color:var(--accent);}
+  .stat .num.d2{color:var(--danger);}
+  .stat .lbl{font-size:13px; color:var(--sub);}
+  .src{font-size:12px; color:var(--sub); margin-top:10px;}
+
+  .bars{margin-top:18px;}
+  .bar-row{display:flex; align-items:center; gap:10px; margin-bottom:8px; font-size:13px;}
+  .bar-row .yr{width:44px; color:var(--sub); flex-shrink:0;}
+  .bar-track{flex:1; background:#f1f3f6; border-radius:6px; height:16px; position:relative; overflow:hidden;}
+  .bar-fill{height:100%; border-radius:6px;}
+  .bar-fill.pos{background:var(--ok);}
+  .bar-fill.neg{background:var(--danger);}
+  .bar-val{width:60px; text-align:right; flex-shrink:0; font-variant-numeric:tabular-nums;}
+
+  .persona{display:flex; gap:16px; align-items:flex-start;}
+  .avatar{width:52px; height:52px; border-radius:50%; background:var(--accent-soft); display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0;}
+  .quote{font-style:normal; color:var(--ink); background:var(--accent-soft); border-radius:12px; padding:14px 16px; margin:14px 0 0;}
+
+  .flow{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:18px 0;}
+  .flow .step{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px 14px; font-size:13px; flex:1; min-width:150px;}
+  .flow .step b{display:block; font-size:14px; margin-bottom:4px;}
+  .flow .arrow{color:var(--sub); font-size:18px;}
+
+  .placeholder{border:1px dashed var(--line); border-radius:12px; padding:18px; color:var(--sub); font-size:14px; text-align:center;}
+
+  .next-list{padding-left:18px; color:var(--sub); font-size:14px;}
+  .next-list li{margin-bottom:6px;}
+
+  footer{padding:28px 0 60px; font-size:12px; color:var(--sub); text-align:center;}
+  footer .notice{background:var(--danger-soft); color:var(--danger); border-radius:10px; padding:10px 14px; display:inline-block; margin-bottom:10px; font-weight:600;}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ① 한 줄 소개 -->
+  <section>
+    <span class="tag">사회초년생을 위한 예금 판단 도구</span>
+    <h1>지금처럼 예금만 해도<br>괜찮을까요?</h1>
+    <p>예금금리·물가상승률·S&amp;P500 데이터를 한 화면에서 비교해서, 예금만으로 충분한지 판단할 근거를 드립니다.</p>
+    <a href="#action" class="cta">데이터로 근거 보기 ↓</a>
+  </section>
+
+  <!-- ② 데이터로 본 문제 -->
+  <section>
+    <h2>왜 지금 이 문제가 중요할까요</h2>
+    <div class="card">
+      <div class="stat-row">
+        <div class="stat">
+          <div class="num d1">2.734%</div>
+          <div class="lbl">예금금리 (2025)</div>
+        </div>
+        <div class="stat">
+          <div class="num d2">2.123%</div>
+          <div class="lbl">물가상승률 (2025)</div>
+        </div>
+      </div>
+      <div class="src">출처: World Bank Open Data (FR.INR.DPST · FP.CPI.TOTL.ZG), 2026-09-18 확인</div>
+
+      <div class="bars">
+        <div class="bar-row">
+          <div class="yr">2017</div>
+          <div class="bar-track"><div class="bar-fill neg" style="width:14%"></div></div>
+          <div class="bar-val">−0.27%p</div>
+        </div>
+        <div class="bar-row">
+          <div class="yr">2021</div>
+          <div class="bar-track"><div class="bar-fill neg" style="width:66%"></div></div>
+          <div class="bar-val">−1.30%p</div>
+        </div>
+        <div class="bar-row">
+          <div class="yr">2022</div>
+          <div class="bar-track"><div class="bar-fill neg" style="width:100%"></div></div>
+          <div class="bar-val">−1.97%p</div>
+        </div>
+        <div class="bar-row">
+          <div class="yr">2025</div>
+          <div class="bar-track"><div class="bar-fill pos" style="width:31%"></div></div>
+          <div class="bar-val">+0.61%p</div>
+        </div>
+      </div>
+      <p style="margin-top:14px;"><b style="color:var(--ink);">해석:</b> 2010~2025년 16개년 중 3개년(2017·2021·2022)은 예금금리가 물가상승률보다 낮았습니다. 예금이 항상 물가를 이기는 건 아닙니다.</p>
+      <p><b style="color:var(--ink);">한계:</b> 은행·상품마다 실제 금리는 다르고, 개인이 자주 사는 품목의 체감 물가와도 차이가 있을 수 있습니다.</p>
+    </div>
+  </section>
+
+  <!-- ③ 누구의 어떤 순간 -->
+  <section>
+    <h2>누구의 어떤 순간인가요</h2>
+    <div class="card">
+      <div class="persona">
+        <div class="avatar">🙂</div>
+        <div>
+          <b>민지, 27세 · 직장인 2년차</b>
+          <p style="margin-top:4px;">최근 적금이 만기되어 목돈 1,200만원이 생겼습니다. 예금에 그대로 두려다가, 문득 "이 돈, 계속 예금에만 둬도 되나?"라는 생각이 들었습니다.</p>
+        </div>
+      </div>
+      <div class="quote">"이자 붙는 거 보면 좋아 보이는데, 이게 진짜 버는 건지는 모르겠어요."</div>
+    </div>
+  </section>
+
+  <!-- ④ F-01 시연 -->
+  <section id="action">
+    <h2>직접 확인해보세요</h2>
+    <div class="flow">
+      <div class="step"><b>기존</b>은행 앱에서 명목 이자만 확인</div>
+      <span class="arrow">→</span>
+      <div class="step"><b>F-01</b>예금·물가·S&amp;P500을 한 화면에서 비교</div>
+      <span class="arrow">→</span>
+      <div class="step"><b>결과</b>예금만으로 충분한지 판단 신호</div>
+    </div>
+    <button class="cta disabled" disabled>체험하기 <small>F-01 준비 중 · 다음 단계(M6-02)에서 만듭니다</small></button>
+  </section>
+
+  <!-- ⑤ 테스트 결과 자리 -->
+  <section>
+    <h2>테스트 결과</h2>
+    <div class="placeholder">R-01(정상) · R-02(빈값) · R-03(오류) 확인 결과는 F-01 구현 뒤 이 자리에 채웁니다.</div>
+  </section>
+
+  <!-- ⑥ 활용 방안 · 다음 개선 -->
+  <section>
+    <h2>활용 방안 · 다음 개선</h2>
+    <ul class="next-list">
+      <li>오늘은 예금·물가상승률·S&amp;P500 연 수익률 범위까지만 비교합니다.</li>
+      <li>다음에는 코스피 등 한국 주가지수, 표준편차 기반 정밀 리스크 계산을 추가할 수 있습니다.</li>
+      <li>사용자가 실제로 결과를 어떻게 해석하는지 확인한 뒤, 해석 문장과 "다음에 확인해볼 것" 체크리스트를 붙일 계획입니다.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <div class="notice">수업 과제 데모 · 투자 판단 근거 아님</div>
+    <p>데이터 출처: World Bank Open Data, FRED · 이 페이지의 숫자는 교육용 참고이며 특정 상품을 추천하지 않습니다.</p>
+  </footer>
+
+</div>
+</body>
+</html>
