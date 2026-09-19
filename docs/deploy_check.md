@@ -4,7 +4,7 @@
 
 |날짜·시각|주소|올린 파일|Ready 여부|확인한 것|
 |---|---|---|---|---|
-| | | | | |
+|2026-09-19 11:51|https://kimdw144-bit.github.io/pusan3/|index.html (GitHub Pages, main 브랜치 root)|✅ Ready(github-pages 배포 성공)|배포 주소를 직접 열어 랜딩 7개 섹션(①~⑦)이 정상 렌더링되는 것 확인. app.html은 아직 없어 CTA는 "준비 중" 상태로 표시됨(M6-02에서 구현 예정)|
 
 ## 배포 확인 (M6-04 · 시크릿 창에서 짧은 주소로)
 
