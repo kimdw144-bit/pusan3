@@ -1,0 +1,31 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>여행 환전 예산 · 소개</title>
+<style>
+body{margin:0;font-family:system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#fff;color:#191f28}
+section{max-width:640px;margin:0 auto;padding:44px 20px;border-bottom:1px solid #f2f4f6}
+.n{color:#3182f6;font-weight:700;font-size:15px}h1{font-size:34px;line-height:1.3;margin:8px 0}h2{font-size:26px;margin:8px 0}
+.big{font-size:44px;font-weight:800;margin:10px 0}.muted{color:#6b7684}
+.btn{display:block;text-align:center;padding:18px;border-radius:16px;background:#3182f6;color:#fff;font-size:20px;font-weight:700;text-decoration:none;margin-top:16px}
+table{width:100%;border-collapse:collapse}td{padding:10px 0;border-top:1px solid #f2f4f6}
+</style></head><body>
+<section><span class="n">① 한 줄 소개</span><h1>환율이 바뀌어도<br>여행 예산을 한 번에</h1><p class="muted">외화 예산을 원화 범위로 바꿔 주는 한 화면 계산기</p></section>
+<section><span class="n">② 데이터로 본 문제</span><h2>같은 5만 엔, 1년 사이 원화가 달라졌습니다</h2>
+<p class="big" id="jpyNow"></p><p class="muted" id="jpyThen"></p><p class="muted" id="srcLine"></p></section>
+<section><span class="n">③ 누구의 어떤 순간</span><h2>출발 한 달 전, 예산을 정해야 하는 대학생</h2>
+<p class="muted">가장 곤란한 순간: 환전을 언제 할지 몰라 예산을 못 정하고 미룬다 (페르소나·저니맵 가설)</p></section>
+<section><span class="n">④ 시연</span><h2>엔화 50,000을 넣어 봅니다</h2><a class="btn" href="app.html">계산기 열기</a></section>
+<section><span class="n">⑤ 테스트 결과</span><table>
+<tr><td>R-01 정상 · 오늘·최저·최고 원화와 기준일</td><td>통과</td></tr>
+<tr><td>R-02 빈값 · 안내 문구, 결과 숨김</td><td>통과</td></tr>
+<tr><td>R-03 오류 · 문자·0 이하 안내</td><td>통과</td></tr></table>
+<p class="muted">test.html 자동 검사 · 배포 주소 시크릿 창 확인</p></section>
+<section><span class="n">⑥ 활용 방안 · 현업 적용 · 다음 개선</span>
+<p>여행사·카드사 앱의 예산 도우미처럼 쓸 수 있습니다. 다음 개선: 실제 환전 우대율 입력, 매일 최신 환율(키 없는 API) 불러오기.</p></section>
+<section><p class="muted">⑦ 수업 과제 데모 · 공개 기준환율 · 투자 판단 근거 아님</p></section>
+<script src="data.js"></script><script src="app.js"></script>
+<script>
+const now=latestRate('JPY'),first=ratesFor('JPY')[0];
+document.getElementById('jpyNow').textContent=`${won(toKrw(50000,now.rate))} (${now.date})`;
+document.getElementById('jpyThen').textContent=`1년 전에는 ${won(toKrw(50000,first.rate))} (${first.date})`;
+document.getElementById('srcLine').textContent=`출처: ${FX_KRW_DAILY.source}`;
+</script></body></html>

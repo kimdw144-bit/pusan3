@@ -1,0 +1,14 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>30초 송금 데모 · 소개</title>
+<style>body{margin:0;font-family:system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#fff;color:#191f28}section{max-width:640px;margin:0 auto;padding:44px 20px;border-bottom:1px solid #f2f4f6}
+.n{color:#3182f6;font-weight:700;font-size:15px}h1{font-size:34px;line-height:1.3;margin:8px 0}h2{font-size:26px;margin:8px 0;line-height:1.35}.big{font-size:44px;font-weight:800;margin:10px 0}.muted{color:#6b7684}
+.btn{display:block;text-align:center;padding:18px;border-radius:16px;background:#3182f6;color:#fff;font-size:20px;font-weight:700;text-decoration:none;margin-top:16px}td{padding:10px 0;border-top:1px solid #f2f4f6}table{width:100%;border-collapse:collapse}</style>
+<section><div class="n">① 한 줄 소개</div><h1>전화번호만 알면,<br>30초 송금</h1><p class="muted">계좌번호·보안카드·공인인증서 없이 보내는 흐름을 체험하는 데모</p></section>
+<section><div class="n">② 데이터로 본 문제</div><h2>폰으로 은행을 쓰는 사람은 많은데, 송금 한 번이 오래 걸렸습니다</h2><p class="muted" style="margin:14px 0 0">스마트폰뱅킹 등록</p><div class="big" id="users"></div><p class="muted" id="usersSrc"></p><p>그런데 송금 한 번은 <b id="before"></b> — 계좌번호 입력, 보안카드, 공인인증서 비밀번호.</p><p class="muted" id="beforeSrc"></p></section>
+<section><div class="n">③ 누구의 어떤 순간</div><h2>회식비 1만 원을 보내려는데 보안카드가 서랍에 있는 대학생</h2><p class="muted">가장 곤란한 순간: 「집에 가서 보낼게」 하고 잊는다 (페르소나·저니맵 가설)</p></section>
+<section><div class="n">④ 시연</div><h2>한 화면에 한 가지씩, 세 번이면 끝</h2><a class="btn" href="app.html">송금 데모 열기</a></section>
+<section><div class="n">⑤ 테스트 결과</div><table><tr><td>R-01 정상 · 전화번호·금액·비밀번호 → 완료 화면·걸린 시간</td><td>통과</td></tr><tr><td>R-02 빈칸 · 칸마다 안내, 다음으로 안 넘어감</td><td>통과</td></tr><tr><td>R-03 오류 · 짧은 번호·음수·200만 원 초과·비밀번호 3자리 안내</td><td>통과</td></tr></table><p class="muted">test.html 자동 검사</p></section>
+<section><div class="n">⑥ 활용 방안 · 다음 개선</div><p>모임 회비·더치페이처럼 소액을 자주 보내는 순간에 씁니다. 다음 개선: 더치페이 금액 나누기 · 받은 사람 확인 문자.</p></section>
+<section><div class="n">⑦ 알림</div><p class="muted">수업 과제 데모 · 공개 기사 사례를 재구성 · 실제 송금·계좌 연결 없음 · 특정 회사의 서비스가 아님</p></section>
+<script src="data.js"></script><script>const F=TRANSFER_FACTS;document.getElementById('users').textContent=(F.smartphone_banking_users.value/10000).toLocaleString('ko-KR')+'만 명';
+document.getElementById('usersSrc').textContent=F.smartphone_banking_users.date+' · '+F.smartphone_banking_users.source;document.getElementById('before').textContent='약 '+F.transfer_time_before.value;
+document.getElementById('beforeSrc').textContent='출처: '+F.transfer_time_before.source+' ('+F.transfer_time_before.date+')';</script></html>

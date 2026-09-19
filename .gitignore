@@ -1,0 +1,9 @@
+data/private/
+references/
+.env
+.env.*
+!.env.example
+*token*
+*credential*
+node_modules/
+output/

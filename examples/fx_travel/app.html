@@ -1,0 +1,48 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>여행 환전 예산 계산</title>
+<style>
+body{margin:0;font-family:system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f2f4f6;color:#191f28}
+main{max-width:560px;margin:0 auto;padding:28px 18px}
+h1{font-size:24px;margin:0 0 6px}.sub{color:#6b7684;margin:0 0 22px}
+.card{background:#fff;border-radius:18px;padding:22px;margin-bottom:14px}
+label{display:block;font-weight:600;margin:12px 0 6px}select,input{width:100%;box-sizing:border-box;padding:14px;font-size:18px;border:1px solid #d1d6db;border-radius:12px}
+button{width:100%;margin-top:18px;padding:16px;font-size:18px;font-weight:700;border:0;border-radius:14px;background:#3182f6;color:#fff;cursor:pointer}
+.err{color:#e42939;font-weight:600;margin:8px 0 0}.big{font-size:34px;font-weight:800;margin:4px 0}.muted{color:#6b7684;font-size:15px}
+.row{display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid #f2f4f6}[hidden]{display:none}
+a{color:#3182f6}
+</style></head><body><main>
+<a href="index.html">← 소개로</a>
+<h1>여행 환전 예산</h1><p class="sub">외화 예산을 오늘 환율과 최근 1년 최저·최고 환율로 원화로 바꿔 봅니다</p>
+<div class="card">
+<label for="cur">통화</label><select id="cur"></select>
+<label for="amt">외화 예산</label><input id="amt" inputmode="decimal" placeholder="예: 50000" aria-describedby="amt-err">
+<p class="err" id="amt-err" hidden></p>
+<button id="go">원화로 계산하기</button>
+</div>
+<div class="card" id="out" hidden>
+<p class="muted" id="todayLabel"></p><p class="big" id="today"></p>
+<div class="row"><span>1년 중 가장 쌌던 날 기준</span><b id="low"></b></div>
+<div class="row"><span>1년 중 가장 비쌌던 날 기준</span><b id="high"></b></div>
+<p class="muted" id="gap"></p>
+</div>
+<p class="muted" id="src"></p>
+<p class="muted">수업 과제 데모 · 공개 기준환율이며 실제 환전 금액(수수료·우대율)과 다릅니다 · 투자 판단 근거 아님</p>
+</main>
+<script src="data.js"></script><script src="app.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+for(const [code,c] of Object.entries(CURRENCIES)){const o=document.createElement('option');o.value=code;o.textContent=`${c.label} (${code})`;$('cur').appendChild(o)}
+$('cur').value='JPY';
+$('src').textContent=`출처: ${FX_KRW_DAILY.source} · 기간 ${FX_KRW_DAILY.period} · 수집 ${FX_KRW_DAILY.fetched}`;
+$('go').onclick=()=>{
+  const v=validateAmount($('amt').value);
+  $('amt-err').hidden=v.ok; $('out').hidden=!v.ok;
+  if(!v.ok){$('amt-err').textContent=v.message;return}
+  const code=$('cur').value,b=budget(code,v.value);
+  $('todayLabel').textContent=`${b.today.date} 기준환율로`;
+  $('today').textContent=won(b.today.krw);
+  $('low').textContent=`${won(b.low.krw)} (${b.low.date})`;
+  $('high').textContent=`${won(b.high.krw)} (${b.high.date})`;
+  $('gap').textContent=`환율에 따라 최대 ${won(b.high.krw-b.low.krw)} 차이가 났습니다. 예산은 넉넉히 잡으세요.`;
+};
+</script></body></html>

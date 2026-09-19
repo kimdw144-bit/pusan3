@@ -1,0 +1,1 @@
+이어서 해줘: 같은 business_plan.md로 NotebookLM 「자세한 자료」 형식을 만들 맞춤설정 문구와, 투자자에게 보낼 한 장 요약(문제·해결·검증·다음 단계)을 docs/one_pager.md로 만들어줘. 숫자는 docs에서만.

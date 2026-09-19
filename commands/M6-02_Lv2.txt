@@ -1,0 +1,1 @@
+이어서 해줘: docs/qa_scenarios.md의 단위 테스트(UT)를 test.html 더블클릭으로 자동 확인하게 만들어 줘. 기대값 하나를 일부러 틀려 FAIL이 나는지 본 뒤 되돌려.

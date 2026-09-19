@@ -1,0 +1,1 @@
+이어서 해줘: presentation.md 다음 개선 1번을 docs/requirements.md에 R-04(정상)·R-05(빈값)·R-06(오류) 초안으로 추가해줘. 구현은 하지 마.

@@ -1,0 +1,95 @@
+{
+  "name": "3일차 학생용 서비스 구현 실습팩",
+  "version": "2026-09-19",
+  "source_pack": "M3_M6_HTML_실습팩_시각화개선.zip",
+  "steps": [
+    {
+      "id": "M5-01",
+      "title": "데이터로 주제 찾기 · 숫자 2개 → 곤란한 사람 → 주제 한 문장",
+      "input": "내 아이디어 또는 관심 분야 · docs/data_guide.md · docs/data_cards.md",
+      "output": "docs/data_sources.md + docs/topic.md"
+    },
+    {
+      "id": "M5-02",
+      "title": "린캔버스 · 가장 위험한 가정 찾기",
+      "input": "docs/topic.md · docs/data_sources.md",
+      "output": "docs/lean_canvas.md"
+    },
+    {
+      "id": "M5-03",
+      "title": "페르소나 · 한 사람을 정밀하게",
+      "input": "docs/lean_canvas.md · docs/data_sources.md",
+      "output": "docs/persona.md"
+    },
+    {
+      "id": "M5-04",
+      "title": "저니맵 · 어디서 멈추고 떠나는가",
+      "input": "docs/persona.md · docs/lean_canvas.md",
+      "output": "docs/journey_map.md"
+    },
+    {
+      "id": "M5-05",
+      "title": "자가점검 · GitHub 제출 (11:40 마감)",
+      "input": "docs/rubric.md · docs/data_sources.md · docs/topic.md · docs/lean_canvas.md · docs/persona.md · docs/journey_map.md",
+      "output": "docs/self_check.md + GitHub 저장소 주소(패들렛)"
+    },
+    {
+      "id": "M5-06",
+      "title": "피드백 반영 · 받은 명령을 실행하고 이유를 남기기",
+      "input": "패들렛 댓글의 피드백 세트 · 해당 docs 문서",
+      "output": "수정한 docs 문서 + docs/feedback_log.md"
+    },
+    {
+      "id": "M5-07",
+      "title": "MVP · RICE로 오늘 만들 기능 하나",
+      "input": "docs/journey_map.md · docs/lean_canvas.md · docs/topic.md · docs/feedback_log.md",
+      "output": "docs/mvp_rice.md + docs/business_plan.md"
+    },
+    {
+      "id": "M5-08",
+      "title": "요구사항 + 테스트 설계 · 정상·빈값·오류",
+      "input": "docs/mvp_rice.md · docs/topic.md · docs/data_sources.md",
+      "output": "docs/requirements.md + docs/qa_scenarios.md"
+    },
+    {
+      "id": "M6-01",
+      "title": "랜딩 먼저 · 발표 순서대로 만들고 1차 배포",
+      "input": "docs/topic.md · docs/data_sources.md · docs/persona.md · docs/journey_map.md · docs/mvp_rice.md · docs/ui_ref.md",
+      "output": "index.html(랜딩) + 1차 배포 주소 + docs/deploy_check.md(배포 이력)"
+    },
+    {
+      "id": "M6-02",
+      "title": "F-01 구현 · R-01 → R-02·R-03 · 돌려보고 확인",
+      "input": "docs/requirements.md · docs/qa_scenarios.md · docs/data_sources.md",
+      "output": "app.html · app.js · data.js + docs/test_log.md"
+    },
+    {
+      "id": "M6-03",
+      "title": "랜딩에 앱 연결 · 테스트 결과 채우고 재배포",
+      "input": "index.html · app.html · docs/test_log.md",
+      "output": "index.html 수정 + 재배포 + docs/deploy_check.md(배포 이력)"
+    },
+    {
+      "id": "M6-04",
+      "title": "배포 주소에서 테스트 · 패들렛 제출",
+      "input": "배포 주소 · docs/qa_scenarios.md · docs/test_log.md",
+      "output": "docs/deploy_check.md + docs/submission.md 초안 + docs/presentation.md 초안"
+    },
+    {
+      "id": "M6-05",
+      "title": "사업계획서 MD 보완 · 최종 제출",
+      "input": "docs/data_sources.md · topic.md · lean_canvas.md · persona.md · journey_map.md · feedback_log.md · mvp_rice.md · requirements.md · qa_scenarios.md · test_log.md · deploy_check.md · submission.md(초안) · presentation.md(초안) · index.html",
+      "output": "docs/business_plan.md + 사업계획서 PDF(또는 MD 대체 제출) + docs/submission.md(최종)"
+    },
+    {
+      "id": "M6-06",
+      "title": "제출 확인 · 선별 발표 · Q&A · 마무리",
+      "input": "랜딩 주소 · docs/presentation.md · docs 문서",
+      "output": "발표(선별) + docs/presentation.md 다음 개선 + docs/closeout.md"
+    }
+  ],
+  "files": 165,
+  "zip_entries": 165,
+  "sha256_match": true,
+  "mismatches": []
+}

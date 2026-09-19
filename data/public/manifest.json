@@ -1,0 +1,68 @@
+[
+  {
+    "file": "fx_krw_daily",
+    "var": "FX_KRW_DAILY",
+    "title": "원화 환율 일별 (1 USD·JPY·EUR·CNY당 원)",
+    "unit": "원",
+    "period": "2025-09-01~2026-09-17 (영업일)",
+    "source": "Frankfurter API (유럽중앙은행 ECB 기준환율)",
+    "license": "ECB 통계 · 출처 표기 후 재사용 / Frankfurter MIT",
+    "refresh_url": "https://api.frankfurter.dev/v1/latest?base=USD&symbols=KRW",
+    "rows": 268
+  },
+  {
+    "file": "kor_macro_annual",
+    "var": "KOR_MACRO_ANNUAL",
+    "title": "한국 연간 지표 8종 (소비자물가 상승률(%) · 대출금리(%) · 예금금리(%) · 실질금리(%) · 청년(15~24세) 실업률(%) · 원/달러 연평균 · 65세 이상 인구 비중(%) · 1인당 GDP(달러))",
+    "unit": "열 이름에 표기",
+    "period": "2010~2025",
+    "source": "World Bank Open Data (FP.CPI.TOTL.ZG, FR.INR.LEND, FR.INR.DPST, FR.INR.RINR, SL.UEM.1524.ZS, PA.NUS.FCRF, SP.POP.65UP.TO.ZS, NY.GDP.PCAP.CD)",
+    "license": "CC BY 4.0 · 출처 표기",
+    "refresh_url": "https://api.worldbank.org/v2/country/KOR/indicator/FP.CPI.TOTL.ZG?format=json",
+    "rows": 16
+  },
+  {
+    "file": "kor_cpi_monthly",
+    "var": "KOR_CPI_MONTHLY",
+    "title": "한국 소비자물가 전년동월비(%) 월별",
+    "unit": "%",
+    "period": "2023-01~2026-08",
+    "source": "OECD Data Explorer (DF_PRICES_ALL, KOR CPI GY)",
+    "license": "CC BY 4.0 · 출처 표기",
+    "refresh_url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.TPS,DSD_PRICES@DF_PRICES_ALL,1.0/KOR.M.N.CPI.PA._T.N.GY?format=csvfilewithlabels",
+    "rows": 44
+  },
+  {
+    "file": "kor_rates_monthly",
+    "var": "KOR_RATES_MONTHLY",
+    "title": "한국 장기금리(10년 국채)·3개월 금리 월별(%)",
+    "unit": "% (연)",
+    "period": "2023-01~2026-08",
+    "source": "OECD Data Explorer (DF_FINMARK, KOR IRLT·IR3TIB)",
+    "license": "CC BY 4.0 · 출처 표기",
+    "refresh_url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.STES,DSD_STES@DF_FINMARK,4.0/KOR.M.IRLT+IR3TIB.PA.....?format=csvfilewithlabels",
+    "rows": 44
+  },
+  {
+    "file": "usdkrw_monthly",
+    "var": "USDKRW_MONTHLY",
+    "title": "원/달러 환율 월평균",
+    "unit": "원 (1달러당)",
+    "period": "2021-01~2026-09",
+    "source": "FRED DEXKOUS (미 연준 H.10)",
+    "license": "미 연준 공표 자료 · 출처 표기 (FRED 제3자 저작권 표시 없음)",
+    "refresh_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DEXKOUS&fq=Monthly",
+    "rows": 69
+  },
+  {
+    "file": "sbiz_bsi_monthly",
+    "var": "SBIZ_BSI_MONTHLY",
+    "title": "소상공인 시장경기동향 체감·전망 지수 (경기전반·매출·자금사정·부산·서울·음식점업·소매업)",
+    "unit": "지수 (100보다 크면 «좋아졌다» 응답이 많음)",
+    "period": "2013-01~2026-06",
+    "source": "공공데이터포털 소상공인시장진흥공단 소상공인 시장경기동향 (파일데이터 3060077)",
+    "license": "공공누리 · 이용허락범위 제한 없음(2026-09-11 확인)",
+    "refresh_url": "https://www.data.go.kr/data/3060077/fileData.do",
+    "rows": 162
+  }
+]

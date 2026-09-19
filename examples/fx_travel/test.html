@@ -1,0 +1,15 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><title>fx_travel 테스트</title>
+<body style="font-family:system-ui;padding:24px"><h1>fx_travel 자동 검사</h1><ol id="out"></ol><p id="sum"></p>
+<script src="data.js"></script><script src="app.js"></script>
+<script>
+const T=[];const t=(id,name,fn)=>{let ok=false,msg='';try{ok=fn()}catch(e){msg=e.message}T.push([id,name,ok,msg])};
+const b=budget('JPY',50000),now=latestRate('JPY'),rg=rateRange('JPY');
+t('R-01','엔 50,000 오늘 원화 = 반올림(50000 × 최신 환율)',()=>b.today.krw===Math.round(50000*now.rate)&&b.today.date===now.date);
+t('R-01','최저 ≤ 오늘 ≤ 최고',()=>b.low.krw<=b.today.krw&&b.today.krw<=b.high.krw);
+t('R-01','최신 기준일 2026-09-17, 100엔 888.01원',()=>now.date==='2026-09-17'&&Math.abs(now.rate*100-888.01)<0.01);
+t('R-02','빈칸이면 안내',()=>validateAmount('').ok===false&&validateAmount('').message==='외화 금액을 입력하세요');
+t('R-03','문자·음수·0이면 안내',()=>['오만','-5','0'].every(v=>validateAmount(v).ok===false));
+t('R-03','쉼표 숫자는 허용',()=>validateAmount('50,000').value===50000);
+const o=document.getElementById('out');let p=0;for(const [id,n,ok,m] of T){if(ok)p++;const li=document.createElement('li');li.textContent=`${ok?'PASS':'FAIL'} · ${id} · ${n}${m?' · '+m:''}`;li.style.color=ok?'green':'red';o.appendChild(li)}
+document.getElementById('sum').textContent=`${p}/${T.length} 통과`;document.title=`${p}/${T.length}`;
+</script></body></html>
