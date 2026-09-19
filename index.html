@@ -74,7 +74,7 @@
   <section>
     <span class="tag">사회초년생을 위한 예금 판단 도구</span>
     <h1>지금처럼 예금만 해도<br>괜찮을까요?</h1>
-    <p>예금금리·물가상승률·S&amp;P500 데이터를 한 화면에서 비교해서, 예금만으로 충분한지 판단할 근거를 드립니다.</p>
+    <p>예금금리·물가상승률·한국 주가지수 데이터를 한 화면에서 비교해서, 예금만으로 충분한지 판단할 근거를 드립니다.</p>
     <a href="#action" class="cta">데이터로 근거 보기 ↓</a>
   </section>
 
@@ -142,24 +142,28 @@
     <div class="flow">
       <div class="step"><b>기존</b>은행 앱에서 명목 이자만 확인</div>
       <span class="arrow">→</span>
-      <div class="step"><b>F-01</b>예금·물가·S&amp;P500을 한 화면에서 비교</div>
+      <div class="step"><b>F-01</b>예금·물가·한국 주가지수를 한 화면에서 비교</div>
       <span class="arrow">→</span>
       <div class="step"><b>결과</b>예금만으로 충분한지 판단 신호</div>
     </div>
-    <button class="cta disabled" disabled>체험하기 <small>F-01 준비 중 · 다음 단계(M6-02)에서 만듭니다</small></button>
+    <a href="./app.html" class="cta">체험하기</a>
   </section>
 
   <!-- ⑤ 테스트 결과 자리 -->
   <section>
     <h2>테스트 결과</h2>
-    <div class="placeholder">R-01(정상) · R-02(빈값) · R-03(오류) 확인 결과는 F-01 구현 뒤 이 자리에 채웁니다.</div>
+    <div class="card">
+      <p style="margin:0 0 6px;"><b style="color:var(--ok);">✅ R-01 정상</b> — 기본값(2021~2025)에서 "2개년 마이너스", "+40% ~ −18.86%" 정상 표시</p>
+      <p style="margin:0 0 6px;"><b style="color:var(--ok);">✅ R-02 빈값</b> — 기간 미선택 시 "비교할 기간을 선택하세요" 안내</p>
+      <p style="margin:0;"><b style="color:var(--ok);">✅ R-03 오류</b> — 시작연도가 종료연도보다 늦을 때, 데이터 로드 실패 시 각각 안내 문구 표시</p>
+    </div>
   </section>
 
   <!-- ⑥ 활용 방안 · 다음 개선 -->
   <section>
     <h2>활용 방안 · 다음 개선</h2>
     <ul class="next-list">
-      <li>오늘은 예금·물가상승률·S&amp;P500 연 수익률 범위까지만 비교합니다.</li>
+      <li>오늘은 예금·물가상승률·한국 주가지수 연 수익률 범위까지만 비교합니다.</li>
       <li>다음에는 코스피 등 한국 주가지수, 표준편차 기반 정밀 리스크 계산을 추가할 수 있습니다.</li>
       <li>사용자가 실제로 결과를 어떻게 해석하는지 확인한 뒤, 해석 문장과 "다음에 확인해볼 것" 체크리스트를 붙일 계획입니다.</li>
     </ul>
