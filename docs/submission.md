@@ -4,7 +4,7 @@
 - 배포 주소(짧은 주소) = ① 랜딩 페이지: https://kimdw144-bit.github.io/pusan3/ (Vercel 대신 GitHub Pages 사용 — Vercel 로그인은 학생이 직접 해야 해서, 이미 연결된 GitHub 권한만으로 켤 수 있는 GitHub Pages로 배포함)
 - ② 사업계획서(NotebookLM 슬라이드 PDF · 안 되면 business_plan.md): 미작성 — M6-05에서 작성 예정
 - 개인 / 팀(팀원 이름): (확인 필요)
-- 캡처 1장: 무엇을 캡처했나 / 저장 위치: (확인 필요 — 예: app.html의 그래프+해석 문장 화면을 캡처해 패들렛 첨부 권장)
+- 캡처 1장: 배포 주소(app.html)의 연도별 예금·물가·주가지수 그래프 화면 / 저장 위치: `submission_capture.png` (프로젝트 최상위 폴더)
 
 ## 패들렛 최종 제출 문구
 
