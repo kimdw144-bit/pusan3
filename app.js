@@ -62,6 +62,17 @@ function runCalculation() {
   var stockResult = calcStockRange(window.KR_STOCK_INDEX_ANNUAL.rows, start, end);
 
   var html = "";
+
+  html += '<div class="chart-card">';
+  html += '<div class="chart-title">연도별 예금금리 · 물가상승률 · 한국 주가지수 수익률 (' + start + '~' + end + '년)</div>';
+  html += '<div class="legend">';
+  html += '<span><i style="background:var(--series-1)"></i>예금금리</span>';
+  html += '<span><i style="background:var(--series-2)"></i>물가상승률</span>';
+  html += '<span><i style="background:var(--series-3)"></i>한국 주가지수 수익률</span>';
+  html += '</div>';
+  html += '<div class="chart-scroll">' + buildChartSVG(window.KOR_MACRO_ANNUAL.rows, window.KR_STOCK_INDEX_ANNUAL.rows, start, end) + '</div>';
+  html += '</div>';
+
   html += '<div class="result-card">';
   html += '<div class="result-title">예금금리 vs 물가상승률 (' + start + '~' + end + '년)</div>';
   html += '<div class="result-big">' + depositResult.negativeCount + '개년 마이너스</div>';
@@ -96,6 +107,84 @@ function interpretDeposit(depositResult) {
     return "절반 이상의 해에서 물가를 못 따라갔어요. 예금만으로는 실질 자산이 줄어든 해가 많았다는 뜻이에요.";
   }
   return "물가를 못 따라간 해가 " + n + "번 있었어요. 예금이 항상 이긴 건 아니라는 뜻이에요.";
+}
+
+function roundedBarPath(x, y, w, h, r, roundTop) {
+  r = Math.min(r, w / 2, h);
+  if (h <= 0) return "";
+  if (roundTop) {
+    return "M" + x + "," + (y + r)
+      + " Q" + x + "," + y + " " + (x + r) + "," + y
+      + " L" + (x + w - r) + "," + y
+      + " Q" + (x + w) + "," + y + " " + (x + w) + "," + (y + r)
+      + " L" + (x + w) + "," + (y + h)
+      + " L" + x + "," + (y + h) + " Z";
+  }
+  return "M" + x + "," + y
+    + " L" + (x + w) + "," + y
+    + " L" + (x + w) + "," + (y + h - r)
+    + " Q" + (x + w) + "," + (y + h) + " " + (x + w - r) + "," + (y + h)
+    + " L" + (x + r) + "," + (y + h)
+    + " Q" + x + "," + (y + h) + " " + x + "," + (y + h - r) + " Z";
+}
+
+function buildChartSVG(depositRows, stockRows, start, end) {
+  var years = [];
+  for (var y = start; y <= end; y++) years.push(y);
+
+  var byYearDeposit = {};
+  depositRows.forEach(function (r) { byYearDeposit[r.year] = r; });
+  var byYearStock = {};
+  stockRows.forEach(function (r) { byYearStock[r.year] = r; });
+
+  var values = [0];
+  years.forEach(function (y) {
+    var d = byYearDeposit[y], s = byYearStock[y];
+    if (d) { values.push(d.deposit_rate_pct, d.cpi_inflation_pct); }
+    if (s) { values.push(s.return_pct); }
+  });
+  var dataMax = Math.max.apply(null, values);
+  var dataMin = Math.min.apply(null, values);
+  var pad = (dataMax - dataMin) * 0.15 || 1;
+  var yMax = dataMax + pad, yMin = dataMin - pad;
+
+  var barW = 14, gap = 2, groupPad = 18;
+  var groupW = barW * 3 + gap * 2 + groupPad;
+  var chartW = Math.max(560, years.length * groupW + 20);
+  var plotTop = 14, plotBottom = 190, plotH = plotBottom - plotTop;
+  var chartH = plotBottom + 28;
+
+  function yScale(v) { return plotTop + (yMax - v) / (yMax - yMin) * plotH; }
+  var zeroY = yScale(0);
+
+  var bars = "", xLabels = "";
+  years.forEach(function (year, i) {
+    var gx = 10 + i * groupW;
+    var d = byYearDeposit[year], s = byYearStock[year];
+    var items = [];
+    if (d) {
+      items.push({ v: d.deposit_rate_pct, color: "var(--series-1)", name: "예금금리" });
+      items.push({ v: d.cpi_inflation_pct, color: "var(--series-2)", name: "물가상승률" });
+    }
+    if (s) {
+      items.push({ v: s.return_pct, color: "var(--series-3)", name: "한국 주가지수 수익률" });
+    }
+    items.forEach(function (b, bi) {
+      var x = gx + bi * (barW + gap);
+      var top = yScale(Math.max(b.v, 0));
+      var bottom = yScale(Math.min(b.v, 0));
+      var h = Math.max(1, bottom - top);
+      var path = roundedBarPath(x, top, barW, h, 3, b.v >= 0);
+      var vStr = (b.v >= 0 ? "+" : "") + b.v + "%";
+      bars += '<path d="' + path + '" fill="' + b.color + '"><title>' + year + '년 ' + b.name + ' ' + vStr + '</title></path>';
+    });
+    xLabels += '<text x="' + (gx + (barW * 1.5 + gap)) + '" y="' + (plotBottom + 18) + '" font-size="11" fill="var(--muted)" text-anchor="middle">' + year + '</text>';
+  });
+
+  return '<svg viewBox="0 0 ' + chartW + ' ' + chartH + '" width="' + chartW + '" height="' + chartH + '" role="img" aria-label="연도별 예금금리, 물가상승률, 한국 주가지수 수익률 비교 막대그래프">'
+    + '<line x1="0" y1="' + zeroY + '" x2="' + chartW + '" y2="' + zeroY + '" stroke="var(--baseline)" stroke-width="1"/>'
+    + bars + xLabels
+    + '</svg>';
 }
 
 function interpretStock(stockResult) {
