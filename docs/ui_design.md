@@ -10,6 +10,10 @@
 | 데이터는 출처·기준 시점과 함께 | 숫자 아래에 기관·기간·한계를 표시 | `data_sources.md` |
 | 입력은 쉬운 순서로 | 사용자가 먼저 아는 값부터 묻기 | `journey_map.md` |
 | 오류는 입력 가까이 | R-02·R-03 안내를 해당 칸 아래에 표시 | `requirements.md` |
+| 가장 중요한 숫자를 가장 크게, 보조 정보는 작고 조용하게 | 결과 값은 30px+ 굵은 숫자, 출처·한계는 12px 회색 | WANDR "Fintech Mobile App Design Trends for 2026" |
+| 다크모드는 2026 핀테크에서 기본값(차트·손익 색이 어두운 배경에서 더 선명) | `prefers-color-scheme: dark`로 라이트/다크 토큰 전부 분리 정의 | Yellow Slice "Fintech UX Design Trends 2026" |
+| 손익·상태는 색+캡슐 배지로, 텍스트에 색을 입히지 않는다 | "안정적/가끔 뒤처짐/자주 뒤처짐" 배지를 숫자 옆에 추가(색은 배지 배경에만) | Robinhood 디자인 시스템 요약(oh-my-design.kr) — 정확한 브랜드 색·로고는 그대로 쓰지 않고 톤만 참고 |
+| 값이 바뀔 때 카운트업 애니메이션으로 확인시켜준다 | 결과 숫자가 0에서 목표값까지 0.6초간 올라가며 표시 | Robinhood "Hello, Ticker" 엔지니어링 블로그(Medium) — 애니메이션 개념만 참고, 코드는 직접 작성 |
 
 ## 2. 랜딩 시각 설계
 
@@ -63,3 +67,14 @@ journey_map.md, requirements.md, qa_scenarios.md
 |캡처 파일·원본 URL|관찰한 원칙|복제하지 않을 요소|내 AIDA 화면에 적용한 원본 설계|
 |---|---|---|---|
 |`references/ui_ref_01.png` / | | | |
+|https://www.wandr.studio/blog/fintech-mobile-app-design-trends|큰 숫자 우선순위, 절제된 색 사용, 마이크로 인터랙션으로 시선 유도|해당 회사의 실제 화면 스크린샷·로고|결과 카드의 숫자 크기·색 위계, 차트 등장 시 페이드인|
+|https://oh-my-design.kr/design-systems/robinhood|8px 기반 spacing 스케일, 16~20px 카드 radius, 손익 색상 관례(초록=이득/빨강=손실)|Robinhood 정확한 브랜드 그린(#00C805)·로고·서체(Capsule Sans)|직접 정한 색 토큰(--good/--bad)과 spacing 변수(--sp-1~--sp-12), 자체 시스템 폰트|
+|https://medium.com/robinhood-engineering/hello-ticker-20eaf6e51689|값이 바뀔 때 숫자가 애니메이션으로 올라가는 "카운트업" 패턴|실시간 티커 자체·차트 색 플래시 로직|결과 숫자에 0.6초 이징 카운트업 애니메이션(직접 구현한 `animateCount()`)|
+|https://www.yellowslice.in/blog/fintech-ux-design-trends-you-must-know|다크모드가 2026 핀테크의 기본 기대치|해당 앱들의 실제 다크 UI 화면|`prefers-color-scheme: dark`로 전체 색 토큰 이중화|
+
+## 4. 디자인 리프레시 기록 (2026-09-19, 피드백: "UI가 너무 AI스러움")
+
+- **바꾸기 전**: 단일 파일에 인라인 CSS, 연한 파스텔 카드, 다크모드 없음, 정적인 숫자 표시, 드롭다운만으로 기간 선택
+- **바꾼 뒤**: `style.css` 디자인 토큰 시스템 분리(spacing/radius/색 스케일), 라이트·다크 모드 이중 정의, 결과 숫자 카운트업 애니메이션, "안정적/가끔 뒤처짐/자주 뒤처짐" 상태 배지, 기간 선택 프리셋 칩(최근 5년·10년·전체) 추가, 스티키 상단바
+- **바꾸지 않은 것**: `calcDepositVsInflation()`·`calcStockRange()`·`validateRange()` 등 계산 로직과 `startYear`/`endYear`/`calcBtn`/`result`/`message` id는 그대로 유지해 `qa_scenarios.md`의 UT/IT가 계속 유효함
+- **선택 이유**: 로고·이미지를 복제하지 않고, 2026 핀테크·게임 스탯카드에서 공통적으로 쓰이는 원칙(큰 숫자, 다크모드, 카운트업, 상태 배지)만 가져와 원본 CSS/SVG로 구현

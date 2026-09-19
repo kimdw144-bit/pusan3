@@ -4,69 +4,63 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>예금만으로 충분할까요? — 확인하기</title>
+<link rel="stylesheet" href="./style.css?v=4">
 <style>
-  :root{
-    --bg:#f7f8fb; --card:#ffffff; --ink:#111827; --sub:#6b7280;
-    --accent:#2f6fed; --accent-soft:#eaf1ff; --danger:#e2493d; --danger-soft:#fdeceb;
-    --ok:#1c9d6b; --ok-soft:#e7f7f0; --info:#9a6b00; --info-soft:#fff6e0; --line:#e5e7eb;
-    --series-1:#2a78d6; --series-2:#eb6834; --series-3:#1baf7a;
-    --muted:#898781; --baseline:#c3c2b7; --gridline:#e1e0d9;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0; background:var(--bg); color:var(--ink);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-    line-height:1.55;
-  }
-  .wrap{max-width:640px; margin:0 auto; padding:40px 20px 80px;}
-  a.back{color:var(--sub); font-size:14px; text-decoration:none;}
-  h1{font-size:24px; margin:16px 0 6px;}
-  p.desc{color:var(--sub); margin:0 0 24px;}
-
-  .card{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:22px; margin-bottom:16px;}
+  .app-wrap{max-width:640px; margin:0 auto; padding:36px 20px 80px;}
   .field-row{display:flex; gap:14px; flex-wrap:wrap; align-items:flex-end;}
   .field{flex:1; min-width:130px;}
-  label{display:block; font-size:13px; color:var(--sub); margin-bottom:6px;}
+  label{display:block; font-size:12.5px; color:var(--muted); margin-bottom:6px; font-weight:600;}
   select{
-    width:100%; padding:10px 12px; font-size:15px; border:1px solid var(--line); border-radius:10px;
-    background:#fff; color:var(--ink);
+    width:100%; padding:12px 12px; font-size:15px; border:1px solid var(--line); border-radius:var(--radius-sm);
+    background:var(--surface-2); color:var(--ink); font-family:inherit;
   }
-  button#calcBtn{
-    padding:11px 22px; font-size:15px; font-weight:700; background:var(--accent); color:#fff;
-    border:none; border-radius:10px; cursor:pointer;
+  .chips{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;}
+  .chip{
+    border:1px solid var(--line); background:var(--surface-2); color:var(--ink-2); font-family:inherit;
+    font-size:12.5px; font-weight:700; padding:7px 13px; border-radius:var(--radius-pill); cursor:pointer;
+    transition:background .15s, color .15s, border-color .15s;
   }
-  button#calcBtn:hover{opacity:.92;}
+  .chip:hover{border-color:var(--brand);}
+  .chip.active{background:var(--brand); color:var(--brand-ink); border-color:var(--brand);}
 
-  .message{margin-top:14px; padding:12px 14px; border-radius:10px; font-size:14px; display:none;}
+  .message{margin-top:14px; padding:12px 14px; border-radius:var(--radius-sm); font-size:14px; display:none; font-weight:600;}
   .message:not(:empty){display:block;}
-  .message.info{background:var(--info-soft); color:var(--info);}
-  .message.error{background:var(--danger-soft); color:var(--danger);}
+  .message.info{background:var(--warn-soft); color:var(--warn);}
+  .message.error{background:var(--bad-soft); color:var(--bad);}
 
   #result{display:none; margin-top:18px;}
-  .chart-card{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:18px 18px 10px; margin-bottom:12px;}
-  .chart-title{font-size:13px; color:var(--sub); margin-bottom:10px;}
-  .legend{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:6px; font-size:12.5px; color:var(--sub);}
+  .chart-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-lg); padding:20px 20px 8px; margin-bottom:14px; box-shadow:var(--shadow-card);}
+  .chart-title{font-size:13px; color:var(--muted); margin-bottom:12px; font-weight:700;}
+  .legend{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:8px; font-size:12.5px; color:var(--ink-2); font-weight:600;}
   .legend span{display:inline-flex; align-items:center; gap:6px;}
   .legend i{width:9px; height:9px; border-radius:50%; display:inline-block;}
   .chart-scroll{overflow-x:auto;}
-  .result-card{background:var(--accent-soft); border-radius:14px; padding:18px; margin-bottom:12px;}
-  .result-title{font-size:13px; color:var(--sub); margin-bottom:6px;}
-  .result-big{font-size:26px; font-weight:800; color:var(--ink);}
-  .result-sub{font-size:13px; color:var(--sub); margin-top:4px;}
-  .result-interpret{font-size:13.5px; color:var(--ink); margin-top:10px; padding-top:10px; border-top:1px solid rgba(0,0,0,.08); line-height:1.5;}
-  .src{font-size:12px; color:var(--sub); margin-top:6px;}
-
-  footer{margin-top:30px; font-size:12px; color:var(--sub);}
-  footer .notice{background:var(--danger-soft); color:var(--danger); border-radius:8px; padding:8px 12px; display:inline-block; font-weight:600; margin-bottom:8px;}
+  .result-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-lg); padding:20px; margin-bottom:14px; box-shadow:var(--shadow-card);}
+  .result-title{font-size:12.5px; color:var(--muted); margin-bottom:8px; font-weight:700;}
+  .result-big{font-size:30px; font-weight:800; color:var(--ink); letter-spacing:-.02em; font-variant-numeric:tabular-nums;}
+  .result-sub{font-size:13px; color:var(--muted); margin-top:4px;}
+  .result-interpret{font-size:13.5px; color:var(--ink-2); margin-top:12px; padding-top:12px; border-top:1px solid var(--line); line-height:1.55;}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <a href="./index.html" class="back">← 랜딩으로</a>
-  <h1>예금만으로 충분할까요?</h1>
-  <p class="desc">비교할 기간을 고르면 예금금리·물가상승률·한국 주가지수 데이터로 판단 신호를 보여드립니다.</p>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="brand-mark"><span class="brand-dot"></span>예금 판단기</span>
+    <a href="./index.html" class="back-link">← 랜딩으로</a>
+  </div>
+</div>
+
+<div class="app-wrap">
+  <h1 style="font-size:26px;">예금만으로 충분할까요?</h1>
+  <p class="lede" style="margin-bottom:24px;">비교할 기간을 고르면 예금금리·물가상승률·한국 주가지수 데이터로 판단 신호를 보여드립니다.</p>
 
   <div class="card">
+    <div class="chips" id="presetChips">
+      <button type="button" class="chip" data-start="2021" data-end="2025">최근 5년</button>
+      <button type="button" class="chip" data-start="2016" data-end="2025">최근 10년</button>
+      <button type="button" class="chip" data-start="2010" data-end="2025">전체(2010~)</button>
+    </div>
     <div class="field-row">
       <div class="field">
         <label for="startYear">시작 연도</label>
@@ -113,7 +107,7 @@
         </select>
       </div>
       <div class="field" style="flex:0 0 auto;">
-        <button id="calcBtn">확인</button>
+        <button id="calcBtn" class="btn btn-primary">확인</button>
       </div>
     </div>
     <div id="message" class="message"></div>
@@ -121,13 +115,13 @@
 
   <div id="result"></div>
 
-  <footer>
+  <footer style="padding-top:14px;">
     <div class="notice">수업 과제 데모 · 투자 판단 근거 아님</div>
     <p>예금금리·물가상승률: World Bank Open Data(CC BY 4.0) · 한국 주가지수: OECD Main Economic Indicators(SPASTT01KRA661N, 2015=100) · 특정 금융상품을 추천하지 않습니다.</p>
   </footer>
 </div>
 
-<script src="./data.js?v=3"></script>
-<script src="./app.js?v=3"></script>
+<script src="./data.js?v=4"></script>
+<script src="./app.js?v=4"></script>
 </body>
 </html>

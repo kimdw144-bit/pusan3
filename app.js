@@ -60,6 +60,7 @@ function runCalculation() {
   var start = Number(startVal), end = Number(endVal);
   var depositResult = calcDepositVsInflation(window.KOR_MACRO_ANNUAL.rows, start, end);
   var stockResult = calcStockRange(window.KR_STOCK_INDEX_ANNUAL.rows, start, end);
+  var badge = badgeForDeposit(depositResult);
 
   var html = "";
 
@@ -74,8 +75,8 @@ function runCalculation() {
   html += '</div>';
 
   html += '<div class="result-card">';
-  html += '<div class="result-title">예금금리 vs 물가상승률 (' + start + '~' + end + '년)</div>';
-  html += '<div class="result-big">' + depositResult.negativeCount + '개년 마이너스</div>';
+  html += '<div class="result-title">예금금리 vs 물가상승률 (' + start + '~' + end + '년) &nbsp;<span class="badge ' + badge.cls + '">' + badge.label + '</span></div>';
+  html += '<div class="result-big" data-count-to="' + depositResult.negativeCount + '" data-count-suffix="개년 마이너스">0개년 마이너스</div>';
   html += '<div class="result-sub">' + depositResult.total + '개년 중 예금금리가 물가상승률보다 낮았던 해</div>';
   html += '<div class="result-interpret">' + interpretDeposit(depositResult) + '</div>';
   html += '</div>';
@@ -95,6 +96,29 @@ function runCalculation() {
 
   resultEl.innerHTML = html;
   resultEl.style.display = "block";
+
+  var countEl = resultEl.querySelector('[data-count-to]');
+  if (countEl) animateCount(countEl, Number(countEl.getAttribute('data-count-to')), countEl.getAttribute('data-count-suffix'));
+}
+
+function badgeForDeposit(depositResult) {
+  var n = depositResult.negativeCount, total = depositResult.total;
+  if (n === 0) return { cls: "badge-good", label: "안정적" };
+  if (n / total >= 0.5) return { cls: "badge-bad", label: "자주 뒤처짐" };
+  return { cls: "badge-warn", label: "가끔 뒤처짐" };
+}
+
+function animateCount(el, to, suffix, duration) {
+  duration = duration || 600;
+  var start = performance.now();
+  function tick(now) {
+    var p = Math.min(1, (now - start) / duration);
+    var eased = 1 - Math.pow(1 - p, 3);
+    var val = Math.round(eased * to);
+    el.textContent = val + suffix;
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
 }
 
 function interpretDeposit(depositResult) {
@@ -193,7 +217,27 @@ function interpretStock(stockResult) {
   return "연도별 오르내림이 " + level + "이에요(최고~최저 차이 " + Math.round(spread * 10) / 10 + "%p). 변동이 크다고 무조건 나쁜 건 아니지만, 짧은 기간에 꼭 필요한 돈이라면 오르내림을 견딜 수 있는지 먼저 생각해보세요.";
 }
 
+function syncChipState() {
+  var s = document.getElementById("startYear").value;
+  var e = document.getElementById("endYear").value;
+  document.querySelectorAll("#presetChips .chip").forEach(function (chip) {
+    var active = chip.getAttribute("data-start") === s && chip.getAttribute("data-end") === e;
+    chip.classList.toggle("active", active);
+  });
+}
+
 window.addEventListener("DOMContentLoaded", function () {
   document.getElementById("calcBtn").addEventListener("click", runCalculation);
+  document.getElementById("startYear").addEventListener("change", syncChipState);
+  document.getElementById("endYear").addEventListener("change", syncChipState);
+  document.querySelectorAll("#presetChips .chip").forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      document.getElementById("startYear").value = chip.getAttribute("data-start");
+      document.getElementById("endYear").value = chip.getAttribute("data-end");
+      syncChipState();
+      runCalculation();
+    });
+  });
+  syncChipState();
   runCalculation();
 });
